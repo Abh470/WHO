@@ -1,0 +1,420 @@
+body {
+  font-family: 'Microsoft JhengHei';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: normal;
+  color: #333;
+  text-decoration: none;
+  overflow: auto;
+}
+
+.form-control {
+  padding: 3px 3px;
+  font-size: 12px;
+}
+
+th {
+  font-weight: normal !important;
+}
+
+h4 {
+  font-size: 17px !important;
+}
+
+.font-14 {
+  font-size: 14px;
+}
+
+label {
+  font-size: 13px;
+  font-family: 'Microsoft JhengHei';
+  padding: 8px;
+  margin-bottom: 0;
+}
+
+thead th {
+  text-align: center;
+  vertical-align: middle !important;
+  font-weight: bold !important;
+}
+
+tbody tr td {
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+.message_panel textarea {
+  overflow: hidden;
+}
+
+.tw-5 {
+  width: 5%;
+}
+
+.tw-10 {
+  width: 10%;
+}
+
+.tw-15 {
+  width: 15%;
+}
+
+.border {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.panel {
+  box-shadow: 0px 0px 15px rgb(0 0 0 / 20%) !important;
+}
+
+.pull {
+  width: 100%;
+  float: left;
+}
+
+/*
+.btn {
+    font-size:14px !important;
+}
+*/
+.btn-info {
+  background-color: #1e7fb8 !important;
+  color: white !important;
+}
+
+
+.blue_bg {
+  background-color: #1e7fb8 !important;
+  color: #fff !important;
+}
+
+.upload-font {
+  font-size: 18px !important;
+}
+
+.head-blue {
+  background-color: #1e7fb8 !important;
+  width: 100%;
+  float: left;
+  color: #fff;
+}
+
+.head-blue h4 {
+  color: #fff;
+  margin: 5px 0;
+  font-size: 13px !important;
+  font-weight: bold;
+  line-height: 1.6;
+}
+
+.navbar-header-custom {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  height: 100px;
+}
+
+.navbar-header-custom h2 {
+  color: #0294d6;
+  font-weight: 700;
+  font-size: 26px;
+}
+
+.navbar-custom {
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+  border: none !important;
+  border-radius: 0px !important;
+  font-size: 16px !important;
+  background: #fff;
+  margin-bottom: 15px;
+}
+
+.navbar-brand {
+  padding: 5px 15px !important;
+  height: 90px;
+}
+
+a.navbar-brand {
+  /*    width: auto;*/
+}
+
+img.logo {
+  /*    width: 100%;*/
+  height: 100%;
+}
+
+.external-emp-table {
+  word-break: break-word;
+}
+
+.custom-external-emp-panel .panel {
+  border-radius: 0px;
+}
+
+.external-emp-date-file {
+  max-width: 250px;
+  width: 100%;
+}
+
+.external-emp-box {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.panel-group .external-emp-panel-heading {
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: #ffffff;
+  cursor: pointer;
+}
+
+.external-emp-panel-heading .panel-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.external-emp-right-top-box {
+  padding: 15px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff;
+  display: block;
+  float: left;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.external-emp-profile-box {
+  padding: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.external-emp-profile-box img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.external-emp-profile-box h3 {
+  margin-top: 0px;
+  padding-top: 10px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.external-emp-profile-box p {
+  font-size: 14px;
+}
+
+.dashboard-top-section {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-filter-section {
+  display: flex;
+}
+
+.table-bordered>thead>tr>th,
+.table-bordered>tbody>tr>th,
+.table-bordered>tfoot>tr>th,
+.table-bordered>thead>tr>td,
+.table-bordered>tbody>tr>td,
+.table-bordered>tfoot>tr>td {
+  border: none;
+  padding: 15px;
+}
+
+.imprest-panel td p {
+  text-align: left !important;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+@media (max-width: 575px) {
+  .external-emp-t-title {
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  .external-emp-t-pr {
+    font-size: 12px;
+  }
+
+  .external-emp-right-time-box-two,
+  .external-emp-right-time-box-one {
+    padding: 10px 0px;
+  }
+
+  .tw-5 {
+    width: auto;
+  }
+
+  .tw-10 {
+    width: auto;
+  }
+
+  .tw-15 {
+    width: auto;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .navbar-header-custom {
+    width: auto;
+    display: block;
+  }
+
+  img.logo {
+    margin-right: auto;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 1199px) {
+  .external-emp-table {
+    min-width: 1070px !important;
+  }
+}
+
+
+
+/***********************Custom-classes*******************************/
+
+.m-0 {
+  margin: 0px !important;
+}
+
+.mb-0 {
+  margin-bottom: 0px !important;
+}
+
+.mt-10 {
+  margin-top: 10px !important;
+}
+
+.mb-10 {
+  margin-bottom: 10px !important;
+}
+
+.d-flex {
+  display: -webkit-box !important;
+  display: -webkit-flex !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+}
+
+.d-block {
+  display: block;
+}
+
+.h-45 {
+  height: 45px !important;
+}
+
+.p-0 {
+  padding: 0px;
+}
+
+.pl-0 {
+  padding-left: 0px;
+}
+
+.pr-0 {
+  padding-right: 0px;
+}
+
+.pt-5 {
+  padding-top: 5px;
+}
+
+.pt-10 {
+  padding-top: 10px;
+}
+
+.mt-15 {
+  margin-top: 15px;
+}
+
+.mb-50 {
+  margin-bottom: 50px;
+}
+
+
+section {
+  padding: 0px;
+}
+
+.position-static {
+  position: static !important;
+}
+
+.message_panel {
+  background: #fff;
+  -webkit-border-radius: 0px;
+  border-radius: 0px;
+  padding: 15px;
+}
+
+/* Rich text picker css */
+.ql-toolbar {
+
+  top: 0px !important;
+}
+
+.ql-active {
+  position: relative;
+}
+
+.ql-editor,
+.ql-snow .ql-editor {
+  border: 1px solid #cecece;
+}
+.loader {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background: url('../images/Titan-Loader.gif') 50% 50% no-repeat rgb(249, 249, 249);
+}
+.imprest-panel .richText .richText-editor {
+  height: auto;
+  overflow-y: auto;
+  overflow-x: auto;
+}
+
+ /* HTML canvas for PDF */
+/* .html2canvas-container {
+  width: 3000px !important;
+  height: 3000px !important;
+}  */
+
+/* SPFX  workbench class*/
+#workbenchPageContent,
+.CanvasComponent.LCS .CanvasZone {
+  max-width: 100% !important;
+}
+
+/* Spfx special all align custom css --START-- */
+.sp-custom-main-box {
+  max-width: 100% !important;
+}
+
+.sp-custom-main-box div[data-automation-id="CanvasSection"] {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.sp-custom-main-box div[data-automation-id="CanvasControl"] {
+  margin: 0px 0px !important;
+  padding: 0px !important;
+}
+
+/* Spfx special all align custom css --END-- */
