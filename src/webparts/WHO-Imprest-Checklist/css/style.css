@@ -418,3 +418,15 @@ section {
 }
 
 /* Spfx special all align custom css --END-- */
+
+
+/* Site page header ribbon (add/edit) hidden  */
+#spCommandBar {
+  display: none;
+}
+
+/* New css added on 14- july- 2023 */
+#tableId_wrapper #table-body tr td {
+  text-align: left;
+}
+

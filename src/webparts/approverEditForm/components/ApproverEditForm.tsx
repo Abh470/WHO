@@ -4,7 +4,7 @@ import { IApproverEditFormProps } from './IApproverEditFormProps';
 import { escape } from '@microsoft/sp-lodash-subset';
 import { sp } from "@pnp/sp/presets/all";
 import { SPComponentLoader } from '@microsoft/sp-loader';
-import * as $ from 'jquery';
+import * as $ from 'jquery'; 
 require("../../WHO-Imprest-Checklist/css/style.css");
 require("../../WHO-Imprest-Checklist/css/padding.css");
 require("../../WHO-Imprest-Checklist/js/common.js");
@@ -63,6 +63,7 @@ export interface State {
   Feedback: string,
   FileArr: any[],
   Disabled: boolean,
+  AttachmentDisabled:boolean,
   CheckListDropdown: IDropdown[]
   UpdateEditForm: boolean
 
@@ -140,7 +141,8 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
       ImprestCheck9: null,
       ImprestCheck10: null,
       ImprestCheck11: null,
-      UpdateEditForm: false
+      UpdateEditForm: false,
+      AttachmentDisabled:false
 
     };
   }
@@ -148,6 +150,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
 
   public componentDidMount(): void {
     $("#loader").hide();
+    this.wideSitePages();
     this.getCurrentUser();
     itemId = this.getParameterByName("Imprestid");
     if (itemId) {
@@ -208,7 +211,8 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
       },
       contentType: "application/json",
       //dataType: 'native',
-      url: "https://prod-05.centralindia.logic.azure.com:443/workflows/4fe4a4a4715042b08044b9890c8a272c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v-d6nNrZfwkSw-gDhYBJ_UHu3g_JlfLy4PebA-uf3-U",
+      // url: "https://prod-05.centralindia.logic.azure.com:443/workflows/4fe4a4a4715042b08044b9890c8a272c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=v-d6nNrZfwkSw-gDhYBJ_UHu3g_JlfLy4PebA-uf3-U",
+      url:"https://prod-92.westeurope.logic.azure.com/workflows/d330e75d32f7412db2d30ae9e3a3106f/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=68H8JulYkJtI042uYfuI_KOCFO57vWkiV6ErEB2ORpU",
       xhrFields: {
         responseType: 'blob'
       },
@@ -311,6 +315,20 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
 
   // }
 
+  private wideSitePages() {
+    $("#s4-workspace").hide();
+    $("#spCommandBar").hide();
+    $(".webPartContainer").hide();
+    $("#CommentsWrapper").hide();
+    $(".SideTabMenu").hide();
+    $("#masterFooter").hide();
+    $("#SuiteNavWrapper").hide();
+    $("#sp-appBar").hide();
+    $("#spLeftNav").hide();
+    $("#spTopPlaceholder").hide();
+    $("#spSiteHeader").hide();
+    $('#spPageCanvasContent').find('[data-automation-id="CanvasZone"]>div').addClass("sp-custom-main-box");
+  }
 
   private async getCheckListItemByID(id) {
     let items = await sp.web.lists.getByTitle("ImprestCheckList").items.getById(id).get();
@@ -365,10 +383,10 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
     this.setState({ monthandYear: dt });
     // this.setState({});
     if (items.ImprestChecklistStatus == "Draft") {
-      this.setState({ Disabled: false });
+      this.setState({ Disabled: false, });
     }
     else if (items.ImprestChecklistStatus == "Completed") {
-      this.setState({ Disabled: true });
+      this.setState({ Disabled: true ,AttachmentDisabled:false});
     }
   }
 
@@ -484,7 +502,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
           // Imprest_x0020_Remarks9: this.state.richtextdescription9,
           // Imprest_x0020_Remarks10: this.state.richtextdescription10,
           // Imprest_x0020_Remarks11: this.state.richtextdescription11,
-          Imprest_x0020_Remarks1: $(".content1").val(),
+          //Imprest_x0020_Remarks1: $(".content1").val(),
           Imprest_x0020_Check1Id: this.state.ImprestCheck1,
           Imprest_x0020_Check2Id: this.state.ImprestCheck2,
           Imprest_x0020_Check3Id: this.state.ImprestCheck3,
@@ -519,7 +537,10 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
           setTimeout(() => {
             $("#loader").hide();
             alert("Form has been submitted successfully");
+            setTimeout(()=>{
             window.location.href =`${this.props.context.pageContext.web.absoluteUrl}/SitePages/DashboardList.aspx`;         
+            },4000)
+            
           }, this.state.FileArr.length+1 * 1000);
         })
         .catch((err) => console.log(err));
@@ -529,12 +550,19 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
   }
 
   private async UpdateRichtextPickerFieldInLoop(id) {
+
+    if($(".content1").val() != '<div><br></div>'){
+      await sp.web.lists.getByTitle('ImprestCheckList').items.getById(id).update({
+      Imprest_x0020_Remarks1: $(".content1").val(),
+      })
+    }
     if ($(".content2").val() != '<div><br></div>' || $(".content3").val() != '<div><br></div>') {
-     await sp.web.lists.getByTitle('ImprestCheckList').items.getById(id).update({
+      await sp.web.lists.getByTitle('ImprestCheckList').items.getById(id).update({
         Imprest_x0020_Remarks2: $(".content2").val(),
         Imprest_x0020_Remarks3: $(".content3").val()
       })
     }
+
     if ($(".content4").val() != '<div><br></div>' || $(".content5").val() != '<div><br></div>') {
       await sp.web.lists.getByTitle('ImprestCheckList').items.getById(id).update({
         Imprest_x0020_Remarks4: $(".content4").val(),
@@ -596,7 +624,6 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
           // Imprest_x0020_Remarks9: this.state.richtextdescription9,
           // Imprest_x0020_Remarks10: this.state.richtextdescription10,
           // Imprest_x0020_Remarks11: this.state.richtextdescription11,
-          Imprest_x0020_Remarks1: $(".content1").val(),
 
           Imprest_x0020_Check1Id: this.state.ImprestCheck1,
           Imprest_x0020_Check2Id: this.state.ImprestCheck2,
@@ -633,7 +660,9 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
           setTimeout(()=>{
             $("#loader").hide();
             alert("Form has been saved successfully.");
-            window.location.href =`${this.props.context.pageContext.web.absoluteUrl}/SitePages/DashboardList.aspx`;
+            setTimeout(()=>{
+              window.location.href =`${this.props.context.pageContext.web.absoluteUrl}/SitePages/DashboardList.aspx`;         
+              },4000)
           },this.state.FileArr.length +1 *1000)
         })
           .catch((err) => alert(JSON.stringify(err)));
@@ -641,6 +670,29 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
     })
   }
 
+  private updateFile():Promise<any>{
+    return new Promise<any>((resolve, reject) => {
+      this.state.FileArr.forEach(async (file) => {
+        if (file.content != "") {
+          sp.web.getFolderByServerRelativeUrl("ImprestListFiles").files.add(file.name, file.content, true)
+            .then(async (result) => {
+              await result.file.getItem().then(item => {
+                item.update({
+                  ImprestCheckListId: itemId
+                })
+                .then(()=>{
+                  alert("Attachment has been saved successfully.")
+                  resolve("")
+                })
+                .catch((error) => console.log(error))
+              })
+            })
+        }
+      })
+
+    })
+
+  }
   private async getCheckListDropdown() {
     let items: [] = await sp.web.lists.getByTitle("CheckList").items.get();
     this.setState({ CheckListDropdown: items })
@@ -1082,7 +1134,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                           <div className="form-group">
                             <label className="col-lg-4 col-md-4 col-sm-4 col-xs-12">Attachment(s):</label>
                             <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
-                              <input className="form-control" type="file" name="uploadfile" disabled={this.state.Disabled}
+                              <input className="form-control" type="file" name="uploadfile" disabled={this.state.AttachmentDisabled}
                                 id="img" style={{ display: 'none' }} onChange={(e) => this.setButtonsEventHandlersForAttachment(e.target.files)} />
                               <label htmlFor="img" className="d-block"><i className="fa fa-upload upload-font"></i> Click to upload file</label>
                             </div>
@@ -1110,8 +1162,10 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                                 {this.state.Disabled && person ? (
                                   <>
                                     <td>{person}</td>
-                                    <td style={{ fontSize: "18px" }}> <a href="#" style={{ pointerEvents: 'none' }}
+                                    {/* <td style={{ fontSize: "18px" }}> <a href="#" style={{ pointerEvents: 'none' }} */}
+                                    <td style={{ fontSize: "18px" }}> <a href="#"
                                       onClick={() => {
+                                        this.deleteFile(itemId, item.name)
                                         let file: any[] = fileInfos.splice(fileInfos.findIndex(a => a.name === item.name), 1)
                                         this.setState({ FileArr: file })
                                         this.setState({ FileArr: fileInfos });
@@ -1162,6 +1216,12 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </>
                           )
                       }
+
+                      {/* only showing attachment button when itemid in query string:(updateEditForm) 
+                      and form field are disabled or (when status is completed)*/}
+                      {this.state.UpdateEditForm && this.state.Disabled ?
+                      (<button type="button" className="btn btn-info mr5" onClick={()=>this.updateFile()}>Save File</button>):"" }
+                      
                       <button type="button" className="btn btn-danger mr5" onClick={this.printpdf}>Print</button>
                       <button type="button" className="btn btn-primary mr5" onClick={() => {
                         window.location.href = `${this.props.context.pageContext.web.absoluteUrl}/SitePages/DashboardList.aspx`;

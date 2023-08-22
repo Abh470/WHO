@@ -3,7 +3,7 @@
   "solution": {
     "name": "dashboard-list-client-side-solution",
     "id": "d255a3e6-933a-4c8c-98d8-9b60aef0ebdb",
-    "version": "1.0.0.1",
+    "version": "1.0.0.3",
     "includeClientSideAssets": true,
     "skipFeatureDeployment": true,
     "isDomainIsolated": false,

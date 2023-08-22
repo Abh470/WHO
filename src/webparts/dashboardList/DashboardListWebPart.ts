@@ -125,12 +125,29 @@ export default class DashboardListWebPart extends BaseClientSideWebPart<IDashboa
 
 
   private async _bindEvent() {
+    this.wideSitePages();
     this.getCurrentUser();
     this.getImprestCheckListData();
     this.domElement.querySelector('#new-form').addEventListener('click', () => {
       window.location.href = `${this.context.pageContext.web.absoluteUrl}/SitePages/ApproverEditForm.aspx`;
     })
 
+  }
+
+
+  private wideSitePages() {
+    $("#s4-workspace").hide();
+    $("#spCommandBar").hide();
+    $(".webPartContainer").hide();
+    $("#CommentsWrapper").hide();
+    $(".SideTabMenu").hide();
+    $("#masterFooter").hide();
+    $("#SuiteNavWrapper").hide();
+    $("#sp-appBar").hide();
+    $("#spLeftNav").hide();
+    $("#spTopPlaceholder").hide();
+    $("#spSiteHeader").hide();
+    $('#spPageCanvasContent').find('[data-automation-id="CanvasZone"]>div').addClass("sp-custom-main-box");
   }
 
 
@@ -145,11 +162,13 @@ export default class DashboardListWebPart extends BaseClientSideWebPart<IDashboa
       const year = date.getFullYear(); // get year
       const formattedDate = month + "-" + year; // concatenate month name and year
       console.log(formattedDate);
+      // let GlAccount = item.GL_x0020_account_x0028_s_x0029_;
+      let GlAccount1 = item.GLaccount_x0028_s_x0029_;
       html += `
       <tr>
           <td>${item.Country}</td>
           <td>${item.Imprest_x0020_Account}</td>
-          <td>${item.GLaccount_x0028_s_x0029_}</td>
+          <td>${GlAccount1}</td>
           <td>${formattedDate}</td>
           <td>${item.ImprestChecklistStatus}</td>
           <td style="font-size: 18px;">
