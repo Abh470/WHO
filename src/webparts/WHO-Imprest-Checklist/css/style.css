@@ -236,6 +236,10 @@ img.logo {
   font-weight: 600;
 }
 
+.checklist_sno{
+ vertical-align: top !important;
+}
+
 @media (max-width: 575px) {
   .external-emp-t-title {
     font-size: 16px;

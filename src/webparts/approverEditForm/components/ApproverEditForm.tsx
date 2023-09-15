@@ -672,7 +672,9 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
 
   private updateFile():Promise<any>{
     return new Promise<any>((resolve, reject) => {
-      this.state.FileArr.forEach(async (file) => {
+      var counter = 0
+      this.state.FileArr.forEach(async (file,index,arr) => {
+        counter++;
         if (file.content != "") {
           sp.web.getFolderByServerRelativeUrl("ImprestListFiles").files.add(file.name, file.content, true)
             .then(async (result) => {
@@ -681,8 +683,15 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                   ImprestCheckListId: itemId
                 })
                 .then(()=>{
-                  alert("Attachment has been saved successfully.")
-                  resolve("")
+                  if(counter == arr.length){
+                    alert("Attachment has been saved successfully.");
+                    setTimeout(()=>{
+                      window.location.href =`${this.props.context.pageContext.web.absoluteUrl}/SitePages/DashboardList.aspx`;         
+                      },2000)
+                    resolve("")
+                  }
+                  
+                 
                 })
                 .catch((error) => console.log(error))
               })
@@ -714,12 +723,32 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
           return function (e) {
             //console.log(file.name);
             //Push the converted file into array
-            fileInfos.push({
-              name: file.name,
-              content: e.target.result
-            });
-            console.log(fileInfos);
-            scope.setState({ FileArr: fileInfos });
+            if (fileInfos.filter(e => e.name === file.name).length > 0) {
+               alert("File with this name already exists.")
+            }
+            else{
+              fileInfos.push({
+                      name: file.name,
+                      content: e.target.result
+                    });
+                    console.log(fileInfos);
+                    scope.setState({ FileArr: fileInfos });
+            }
+            // fileInfos.forEach((obj)=>{
+            //   if(obj.name == file.name){
+            //    alert("File with this name already exists.")
+            //   }
+            //   else{
+            //     fileInfos.push({
+            //       name: file.name,
+            //       content: e.target.result
+            //     });
+            //     console.log(fileInfos);
+            //     scope.setState({ FileArr: fileInfos });
+            //   }
+              
+            // })
+           
           }
         })(file);
         reader.readAsArrayBuffer(file);
@@ -830,7 +859,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                         </thead>
                         <tbody>
                           <tr>
-                            <td>1</td>
+                            <td className="checklist_sno">1</td>
                             <td>
                               <p>Is each transaction supported by appropriate supporting documents?</p>
                               {/* <RichText value={this.state.richtextdescription1}
@@ -856,7 +885,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </td>
                           </tr>
                           <tr>
-                            <td>2</td>
+                            <td className="checklist_sno">2</td>
                             <td>
                               <p>Payment per transaction charged to IPO does not exceed $2,500</p>
                               {/* <RichText value={this.state.richtextdescription2}
@@ -882,7 +911,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </td>
                           </tr>
                           <tr>
-                            <td>3</td>
+                            <td className="checklist_sno">3</td>
                             <td>
                               <p>Payments charged/receipts credited to IPOs are in line with Imprest PO guidelines.</p>
                               {/* <RichText value={this.state.richtextdescription3}
@@ -908,7 +937,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </td>
                           </tr>
                           <tr>
-                            <td>4</td>
+                            <td className="checklist_sno">4</td>
                             <td>
                               <p>Imprest payments are not batch processed in GSM.</p>
                               {/* <RichText value={this.state.richtextdescription4}
@@ -934,7 +963,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </td>
                           </tr>
                           <tr>
-                            <td>5</td>
+                            <td className="checklist_sno">5</td>
                             <td>
                               <p>Imprest ceiling is adequate.</p>
                               {/* <RichText value={this.state.richtextdescription5}
@@ -960,7 +989,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </td>
                           </tr>
                           <tr>
-                            <td>6</td>
+                            <td className="checklist_sno">6</td>
                             <td>
                               <p>Cash or bank balance was positive throughout the month and no overdraft was observed at any point during the month.</p>
                               {/* <RichText value={this.state.richtextdescription6}
@@ -986,7 +1015,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </td>
                           </tr>
                           <tr>
-                            <td>7</td>
+                            <td className="checklist_sno">7</td>
                             <td>
                               <p>Cheques have been issued serially and Cheque Number(s)/P.I. Number(s) are mentioned appropriately for each of the transaction in GSM.</p>
                               {/* <RichText value={this.state.richtextdescription7}
@@ -1012,7 +1041,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </td>
                           </tr>
                           <tr>
-                            <td>8</td>
+                            <td className="checklist_sno">8</td>
                             <td>
                               <p>Cash-in-safe has been maintained within the insurance limit at all the times during the month.</p>
                               {/* <RichText value={this.state.richtextdescription8}
@@ -1038,7 +1067,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </td>
                           </tr>
                           <tr>
-                            <td>9</td>
+                            <td className="checklist_sno">9</td>
                             <td>
                               <p>Are proper handing over documents signed and attached to the Imprest Returns, if applicable?</p>
                               {/* <RichText value={this.state.richtextdescription9}
@@ -1064,7 +1093,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </td>
                           </tr>
                           <tr>
-                            <td>10</td>
+                            <td className="checklist_sno">10</td>
                             <td>
                               <p>Currency conversion greater than $100,000 is supported by competitive bidding process and cumulative currency conversion in excess of $500,000 per month is coordinated through BFO/SEARO.</p>
                               {/* <RichText value={this.state.richtextdescription10}
@@ -1090,7 +1119,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             </td>
                           </tr>
                           <tr>
-                            <td>11</td>
+                            <td className="checklist_sno">11</td>
                             <td>
                               <p>There is no other comment to add.</p>
                               {/* <RichText value={this.state.richtextdescription11}
@@ -1098,7 +1127,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                                 onChange={(text) => {
                                   this.setState({ richtextdescription11: text });
                                   return text;
-                                }}
+                                }} 
                               /> */}
                               <textarea className="content11" name="example11"
                                 onChange={(e) => this.setState({ richtextdescription11: e.target.value })} />
@@ -1135,7 +1164,9 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             <label className="col-lg-4 col-md-4 col-sm-4 col-xs-12">Attachment(s):</label>
                             <div className="col-lg-8 col-md-8 col-sm-8 col-xs-12">
                               <input className="form-control" type="file" name="uploadfile" disabled={this.state.AttachmentDisabled}
-                                id="img" style={{ display: 'none' }} onChange={(e) => this.setButtonsEventHandlersForAttachment(e.target.files)} />
+                                id="img" style={{ display: 'none' }}
+                                onClick={(e)=>e.currentTarget.value = null}
+                                 onChange={(e) => this.setButtonsEventHandlersForAttachment(e.target.files)} />
                               <label htmlFor="img" className="d-block"><i className="fa fa-upload upload-font"></i> Click to upload file</label>
                             </div>
                           </div>
@@ -1157,7 +1188,7 @@ export default class ApproverEditForm extends React.Component<IApproverEditFormP
                             const person = item.person;
                             return (
                               <tr>
-                                <td>{index}</td>
+                                <td>{index + 1}</td>
                                 <td><a href="#">{item.name}</a></td>
                                 {this.state.Disabled && person ? (
                                   <>
